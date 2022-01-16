@@ -50,24 +50,26 @@ Example Playbook
 *Inside `group_vars/docker-servers.yml`*:
 
 	containers:
+	- name: nodeapp1
+	  image: nodeapp
+	  ports:
+	   - "1111:8081"
+	  container_ports:
+	   - 8081
+	  mounts: 
+           - source: /tmp
+           - target: /tmp
+           type: bind
+	  env:
+	    APPID: '1111'
+
 	- name: nodeapp2
 	  image: nodeapp
 	  ports:
 	   - "2222:8081"
 	  container_ports:
 	   - 8081
-	  volumes: 
-           - /tmp:/tmp
-	  env:
-	    APPID: '2222'
-
-	- name: nodeapp3
-	  image: nodeapp
-	  ports:
-	   - "3333:8081"
-	  container_ports:
-	   - 8081
-	  volumes: false
+	  mounts: false
 	  env: false
 
 License

@@ -1,0 +1,52 @@
+######## NOTES #########
+#
+# 1- define the containers in the same order you want them to run, start and restart (stop is automatically in reverse) 
+#
+# 2- container_ports are the ports you want the script to wait for to be ready before it proceeds
+#    (ex. waiting for mysql server port 3036 to be ready before starting some app)
+#
+# 3- set ports,container_ports,mounts,env to false if you do not want to use it
+#
+# 4- to take action on one container only pass the container info inline
+#
+#    examples for inline one container actions :
+#
+#    run :
+#
+# $ ansible-playbook docker_playbook.yml --tags run --extra-vars='{"containers":[{"name":"nodeapp3","image":"nodeapp","ports":["3333:8081"],"container_ports":[8081],"mounts":false,"env":{"APPID":"3333"}}]}'
+#
+#    restart :
+#
+# $ ansible-playbook docker_playbook.yml --tags restart --extra-vars='{"containers":[{"name":"nodeapp3","container_ports":[8081]}]}'
+#
+#    stop :    $ ansible-playbook docker_playbook.yml --tags stop --extra-vars='{"containers":[{"name":"nodeapp3"}]}'
+#
+#    start :   $ ansible-playbook docker_playbook.yml --tags start --extra-vars='{"containers":[{"name":"nodeapp3"}]}'
+#
+#    status :  $ ansible-playbook docker_playbook.yml --tags status --extra-vars='{"containers_list":["nodeapp3"]}'
+#
+######################
+---
+containers: 
+- name: nodeapp1
+  image: nodeapp
+  ports: 
+   - "1111:8081"
+  container_ports:
+   - 8081
+  mounts:
+   - source: /tmp
+     target: /tmp
+     type: bind # you can use volume instead of bind
+  env: 
+    APPID: '1111'
+
+- name: nodeapp2
+  image: nodeapp
+  ports: 
+   - "2222:8081"
+  container_ports: 
+   - 8081
+  mounts: false
+  env: 
+    APPID: '2222'
