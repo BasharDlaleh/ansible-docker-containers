@@ -33,7 +33,7 @@ Note: for operating systems that do not support Python 3, the module 'docker-py'
 Role Variables
 --------------
 
-This role uses group vars to define what containers we want to manage, please see the notes in docker-servers.yml file for more details
+This role uses group vars to define what containers we want to manage, so you need to create group_vars folder in your work directory and define your groups inside it, please see the notes in docker-servers.yml example group vars file for more details
  
 Dependencies
 ------------

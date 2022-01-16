@@ -1,5 +1,7 @@
 ######## NOTES #########
 #
+# This is an example group vars file for a group named docker-servers in your inventory/hosts file
+#
 # 1- define the containers in the same order you want them to run, start and restart (stop is automatically in reverse) 
 #
 # 2- container_ports are the ports you want the script to wait for to be ready before it proceeds
