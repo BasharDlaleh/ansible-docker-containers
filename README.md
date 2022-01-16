@@ -44,8 +44,10 @@ Example Playbook
 ----------------
 
     - hosts: docker-servers
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
       roles:
-         - { role: bashardlaleh.docker.containers }
+         - { role: BasharDlaleh.docker.containers }
 
 *Inside `group_vars/docker-servers.yml`*:
 
