@@ -1,5 +1,7 @@
 galaxy_info:
-  author: Bashar Dlaleh
+  role_name: docker.containers
+  author: BasharDlaleh
+  description: manage Docker containers in Linux.
   description: DevOps Engineer
   company: cNepho Global
 
