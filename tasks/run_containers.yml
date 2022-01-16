@@ -1,0 +1,36 @@
+- name: Run Containers
+  tags: never,run
+  docker_container:
+    name: "{{ item.name }}"
+    image: "{{ item.image }}"
+    state: started
+    ports: "{{ item.ports if item.ports else omit }}"
+    mounts: "{{ item.mounts if item.mounts else omit }}"
+    env: "{{ item.env if item.env else omit }}"
+
+- name: Get Container IP Address
+  tags: never,run
+  command: "docker inspect --format '{''{ .NetworkSettings.IPAddress }''}' {{ item.name }}"
+  changed_when: false
+  register: container_ip_address
+
+- name: Wait For Container To Become Ready
+  tags: never,run
+  changed_when: false
+  loop: "{{ item.container_ports if item.container_ports else omit }}"
+  loop_control:
+        loop_var: port
+  wait_for:
+    host: "{{ container_ip_address.stdout }}"
+    port: "{{ port }}"
+    state: started
+    delay: 5
+    connect_timeout: 10
+    timeout: 30 # timeout does not fail if there is no condition like port,.... (host is no enough) so it becomes like sleep
+  when: item.container_ports
+
+- name:
+  tags: never,run
+  fail:
+    msg: "Sorry, The Container {{ item.name }} Could Not Be Started!"
+  when: container_ip_address.stdout == ""

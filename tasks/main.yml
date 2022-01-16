@@ -1,2 +1,54 @@
 ---
 # tasks file for docker-containers
+- block:
+  - name: Get Present Containers
+    tags: status,info
+    command: "docker ps -a --format '{''{.Names}''}'"
+    changed_when: false
+    register: containers_names
+
+  - name: Create Containers Names List
+    tags: status,info
+    set_fact: 
+      containers_list: "{{ containers_names.stdout.split('\n') }}"
+
+  - name: Gather Containers Details
+    tags: status,info
+    loop: "{{ containers_list }}"
+    command: "docker inspect {{ item }}"
+    changed_when: false
+    register: containers
+
+- name: Print Containers Statuses
+  tags: status
+  debug:
+    msg: "{{ (item.stdout | from_json)[0].Name }} is {{(item.stdout | from_json)[0].State.Status }}"
+    # '{% if (item.stdout | from_json)[0].State.Status == "running" %}
+    #"{{(item.stdout | from_json)[0].Name}}" is running
+    #     {% else %}
+    #     "{{(item.stdout | from_json)[0].Name}}" is not running
+    #     {% endif %}' 
+  loop: "{{ containers.results }}"
+  loop_control:
+    label: "Container {{ (item.stdout | from_json)[0].Name }}"
+   #msg: "{{ (nodeapps.results[0].stdout | from_json)[0].Name }}" 
+
+- name:
+  tags: never,start,restart
+  include_tasks: restart_containers.yml
+  loop: "{{ containers }}"
+
+- name: Stop Containers
+  tags: never,stop
+  command: "docker stop {{ item.name }}"
+  loop: "{{ containers | reverse }}"
+
+- name:
+  tags: never,run
+  include_tasks: run_containers.yml
+  loop: "{{ containers }}"
+
+- name: Remove Containers
+  tags: never,remove
+  command: "docker rm -f {{ item.name }}"
+  loop: "{{ containers | reverse }}"
