@@ -1,7 +1,7 @@
 Role Name
 =========
 
-bashardlaleh.docker.containers
+docker_containers
 
 An Ansible Role that manages docker containers on Linux servers. 
 
@@ -47,7 +47,7 @@ Example Playbook
       vars:
         ansible_python_interpreter: /usr/bin/python3
       roles:
-         - { role: BasharDlaleh.docker.containers }
+         - { role: BasharDlaleh.docker_containers }
 
 *Inside `group_vars/docker-servers.yml`*:
 

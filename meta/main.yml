@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: docker.containers
+  role_name: docker_containers
   author: BasharDlaleh
   description: manage Docker containers in Linux.
   company: cNepho Global
