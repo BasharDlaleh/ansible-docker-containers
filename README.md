@@ -60,8 +60,8 @@ Example Playbook
 	   - 8081
 	  mounts: 
            - source: /tmp
-           - target: /tmp
-           - type: bind
+             target: /tmp
+             type: bind
 	  env:
 	    APPID: '1111'
 
