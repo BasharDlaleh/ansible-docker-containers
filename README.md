@@ -61,7 +61,7 @@ Example Playbook
 	  mounts: 
            - source: /tmp
            - target: /tmp
-           type: bind
+           - type: bind
 	  env:
 	    APPID: '1111'
 
