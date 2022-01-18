@@ -3,7 +3,7 @@ Role Name
 
 docker_containers
 
-An Ansible Role that manages docker containers on Linux servers. 
+An Ansible Role to manage docker containers on Linux servers. 
 
 Supported docker operations : 
 
