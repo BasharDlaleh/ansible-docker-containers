@@ -17,7 +17,7 @@
     loop: "{{ containers }}"
     command: "docker inspect {{ item }}"
     changed_when: false
-    register: containers
+    register: containers_info
 
 - name: Print Containers Statuses
   tags: status
@@ -28,7 +28,7 @@
     #     {% else %}
     #     "{{(item.stdout | from_json)[0].Name}}" is not running
     #     {% endif %}' 
-  loop: "{{ containers.results }}"
+  loop: "{{ containers_info.results }}"
   loop_control:
     label: "Container {{ (item.stdout | from_json)[0].Name }}"
    #msg: "{{ (nodeapps.results[0].stdout | from_json)[0].Name }}" 
