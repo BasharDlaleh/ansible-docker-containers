@@ -10,11 +10,11 @@
   - name: Create Containers Names List
     tags: status,info
     set_fact: 
-      containers_list: "{{ containers_names.stdout.split('\n') }}"
+      containers: "{{ containers_names.stdout.split('\n') }}"
 
   - name: Gather Containers Details
     tags: status,info
-    loop: "{{ containers_list }}"
+    loop: "{{ containers }}"
     command: "docker inspect {{ item }}"
     changed_when: false
     register: containers
