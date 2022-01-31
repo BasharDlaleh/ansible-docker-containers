@@ -74,6 +74,17 @@ Example Playbook
 	  mounts: false
 	  env: false
 
+Then you use commands with tags :
+
+examples :
+
+    $ ansible-playbook docker_playbook.yml --tags run
+    $ ansible-playbook docker_playbook.yml --tags restart
+
+  to take action on one container only , pass the container info inline
+
+$ ansible-playbook docker_playbook.yml --tags stop --extra-vars='{"containers":[{"name":"nodeapp3"}]}'
+
 License
 -------
 
