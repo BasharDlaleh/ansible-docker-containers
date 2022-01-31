@@ -83,7 +83,7 @@ examples :
 
   to take action on one container only , pass the container info inline
 
-$ ansible-playbook docker_playbook.yml --tags stop --extra-vars='{"containers":[{"name":"nodeapp3"}]}'
+    $ ansible-playbook docker_playbook.yml --tags stop --extra-vars='{"containers":[{"name":"nodeapp3"}]}'
 
 License
 -------
